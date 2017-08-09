@@ -9,7 +9,16 @@ isset($_GET['url']) ? $url = $_GET['url'] : $url = '';
 isset($_GET['pdf_password']) ? $pdf_password = $_GET['pdf_password'] : $pdf_password = '';
 
 if(empty($url)) {
-	echo "invalid url\n";
+	echo '{';
+		echo '"message": "Invalid PDF URL to sign."';
+	echo '}';
+	exit;
+}
+
+if(pathinfo($url, PATHINFO_EXTENSION) != 'pdf') {
+	echo '{';
+		echo '"message": "Invalid PDF File to sign."';
+	echo '}';
 	exit;
 }
 
