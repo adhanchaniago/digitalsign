@@ -13,6 +13,24 @@ require_once "FPDI/fpdi.php";
 isset($_GET['url']) ? $url = $_GET['url'] : $url = '';
 //$pdf_password = $_GET['pdf_password'];
 isset($_GET['pdf_password']) ? $pdf_password = $_GET['pdf_password'] : $pdf_password = '';
+
+//print_r(pathinfo($url));
+//exit;
+
+if(empty($url)) {
+	echo '{';
+		echo '"message": "Invalid PDF URL to sign."';
+	echo '}';
+	exit;
+}
+
+if(pathinfo($url, PATHINFO_EXTENSION) != 'pdf') {
+	echo '{';
+		echo '"message": "Invalid PDF File to sign."';
+	echo '}';
+	exit;
+}
+
 $src_file = file_get_contents($url);
 $pdf_filename = basename($url);
 //echo "$pdf_filename <br>\n";
