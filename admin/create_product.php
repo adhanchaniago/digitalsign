@@ -22,38 +22,49 @@ echo "<div class='right-button-margin'>";
 echo "</div>";
 
 // if the form was submitted - PHP OOP CRUD Tutorial
-if($_POST){
- 
-    // set product property values
-    $product->name = $_POST['name'];
-    $product->pdf_password = $_POST['pdf_password'];
-    //$product->price = $_POST['price'];
-    $product->description = $_POST['description'];
-    $product->category_id = $_POST['category_id'];
+if(!empty($_POST)){
 
-    //print_r($_FILES);
-    //exit;
+    //print_r($_POST);
 
-    $pdf=!empty($_FILES["pdf"]["name"]) ? basename($_FILES["pdf"]["name"]) : "";
+    if($_POST['name'] != NULL) { // check name
+        // set product property values
+        $product->name = $_POST['name'];
+        $product->pdf_password = $_POST['pdf_password'];
+        //$product->price = $_POST['price'];
+        $product->description = $_POST['description'];
+        $product->category_id = $_POST['category_id'];
 
-	$product->pdf = $pdf;
+        //print_r($_FILES);
+        //exit;
 
-    // try to upload the submitted file
-    // uploadPhoto() method will return an error message, if any.
-    if(!empty($pdf)) {
-        echo $product->uploadPDF();
+        $pdf=!empty($_FILES["pdf"]["name"]) ? basename($_FILES["pdf"]["name"]) : "";
+
+        $product->pdf = $pdf;
+
+        // try to upload the submitted file
+        // uploadPhoto() method will return an error message, if any.
+        if(!empty($pdf)) {
+            echo $product->uploadPDF();
+        }
+    
+        // create the product
+        if($product->create()){
+
+            echo "<div class='alert alert-success'>Product was created.</div>";
+        }
+    
+        // if unable to create the product, tell the user
+        else{
+            echo "<div class='alert alert-danger'>Unable to create product.</div>";
+        }
+
+    }
+    else {
+        echo "<div class='alert alert-danger'>Unable to create product, please insert 
+Insurance No.</div>";
     }
  
-    // create the product
-    if($product->create()){
-
-        echo "<div class='alert alert-success'>Product was created.</div>";
-    }
- 
-    // if unable to create the product, tell the user
-    else{
-        echo "<div class='alert alert-danger'>Unable to create product.</div>";
-    }
+    
 }
 
 

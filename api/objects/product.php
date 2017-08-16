@@ -59,14 +59,14 @@ class Product{
         $stmt = $this->conn->prepare($query);
  
         // sanitize
-        $this->name=htmlspecialchars(strip_tags($this->name));
-        $this->description=htmlspecialchars(strip_tags($this->description));
-        $this->pdf_url=htmlspecialchars(strip_tags($this->pdf_url));
-        $this->pdf_password=htmlspecialchars(strip_tags($this->pdf_password));
-        $this->org_pdf=htmlspecialchars(strip_tags($this->org_pdf));
-        $this->sign_pdf=htmlspecialchars(strip_tags($this->sign_pdf));
-        $this->category_id=htmlspecialchars(strip_tags($this->category_id));
-        $this->created=htmlspecialchars(strip_tags($this->created));
+        $this->name=trim(htmlspecialchars(strip_tags($this->name)));
+        $this->description=trim(htmlspecialchars(strip_tags($this->description)));
+        $this->pdf_url=trim(htmlspecialchars(strip_tags($this->pdf_url)));
+        $this->pdf_password=trim(htmlspecialchars(strip_tags($this->pdf_password)));
+        $this->org_pdf=trim(htmlspecialchars(strip_tags($this->org_pdf)));
+        $this->sign_pdf=trim(htmlspecialchars(strip_tags($this->sign_pdf)));
+        $this->category_id=trim(htmlspecialchars(strip_tags($this->category_id)));
+        $this->created=trim(htmlspecialchars(strip_tags($this->created)));
  
         // bind values
         $stmt->bindParam(":name", $this->name);

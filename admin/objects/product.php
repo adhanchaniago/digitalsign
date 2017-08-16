@@ -370,8 +370,8 @@ class Product{
             //}
              
             // make sure submitted file is not too large, can't be larger than 1 MB
-            if($_FILES['pdf']['size'] > (1024000)){
-                $file_upload_error_messages.="<div>Image must be less than 1 MB in size.</div>";
+            if($_FILES['pdf']['size'] > (10240000)){
+                $file_upload_error_messages.="<div>Image must be less than 10 MB in size.</div>";
             }
              
             // make sure the 'uploads' folder exists

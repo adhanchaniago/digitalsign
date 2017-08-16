@@ -61,11 +61,28 @@ $pdf = new FPDI( '', 'mm', '' ); //FPDI extends TCPDF
 $pdf->setPrintHeader(FALSE);
 $pdf->setPrintFooter(FALSE);
 
+/*
+// One Page
 $pdf->AddPage();
 //$pages = $pdf->setSourceFile( 'test.pdf' );
 $pages = $pdf->setSourceFile( 'signfiles/a.pdf' );
 $page = $pdf->ImportPage( 1 );
 $pdf->useTemplate( $page, 0, 0 );
+*/
+
+// Multiple Page
+$pdf->AddPage();
+$pdf->setSourceFile( 'signfiles/a.pdf' );
+$pdf->numPages = $pdf->setSourceFile( 'signfiles/a.pdf' );
+$tplIdx = $pdf->importPage(1);
+$pdf->useTemplate($tplIdx, 0, 0, 0);
+if($pdf->numPages>1) {
+	for($i=2;$i<=$pdf->numPages;$i++) {
+		$pdf->AddPage();
+		$tplIdx = $pdf->importPage($i);
+		$pdf->useTemplate($tplIdx, 0, 0, 0);
+	}
+}
 
 # Save Original File
 $pdf->Output( $filesave_org, 'F' );
@@ -96,10 +113,27 @@ if(!(empty($pdf_password))) {
 	$pdf->SetProtection($permissions=array('print', 'copy'), $pdf_password, null, 0, null);
 }
 
+/*
+// One Page
 $pdf->AddPage();
 $pages = $pdf->setSourceFile( 'signfiles/a.pdf' );
 $page = $pdf->ImportPage( 1 );
 $pdf->useTemplate( $page, 0, 0 );
+*/
+
+// Multiple Page
+$pdf->AddPage();
+$pdf->setSourceFile( 'signfiles/a.pdf' );
+$pdf->numPages = $pdf->setSourceFile( 'signfiles/a.pdf' );
+$tplIdx = $pdf->importPage(1);
+$pdf->useTemplate($tplIdx, 0, 0, 0);
+if($pdf->numPages>1) {
+	for($i=2;$i<=$pdf->numPages;$i++) {
+		$pdf->AddPage();
+		$tplIdx = $pdf->importPage($i);
+		$pdf->useTemplate($tplIdx, 0, 0, 0);
+	}
+}
 
 
 // *** set signature appearance ***

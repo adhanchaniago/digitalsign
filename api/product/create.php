@@ -19,6 +19,8 @@ $product = new Product($db);
  
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
+
+//print_r($data);
  
 if (!empty($data)) {
 
@@ -38,43 +40,46 @@ if (!empty($data)) {
 	$sign_api = json_decode(file_get_contents($sign_url));
 	//print_r($sign_api);
 
-	// Insert URL Original - Signed PDF to DB
-	$product->org_pdf = $sign_api->org_url;
-	$product->sign_pdf = $sign_api->sign_url;
+	//echo "$sign_api->message\n";
 
-	//echo "$product->org_pdf"."$product->sign_pdf";
-	echo '{';
-		echo '"message": "PDF was signed.",';
-		echo '"name": "'.$product->name.'",';
-		echo '"description": "'.$product->description.'",';
-		echo '"org_url": "'.$product->org_pdf.'",';
-		echo '"sign_url": "'.$product->sign_pdf.'",';
-		echo '"pdf_password": "'.$product->pdf_password.'",';
-		echo '"created": "'.$product->created.'"';
-	echo '}';
+	if($sign_api->message=="PDF was signed.") {
+		// Insert URL Original - Signed PDF to DB
+		$product->org_pdf = $sign_api->org_url;
+		$product->sign_pdf = $sign_api->sign_url;
 
-	//exit;
+		//echo "$product->org_pdf"."$product->sign_pdf";
+		echo '{';
+			echo '"message": "PDF was signed.",';
+			echo '"name": "'.$product->name.'",';
+			echo '"description": "'.$product->description.'",';
+			echo '"org_url": "'.$product->org_pdf.'",';
+			echo '"sign_url": "'.$product->sign_pdf.'",';
+			echo '"pdf_password": "'.$product->pdf_password.'",';
+			echo '"created": "'.$product->created.'"';
+		echo '}';
 
+		//exit;
+
+		// create the product
+		if($product->create()){
+			//echo '{';
+			//   echo '"message": "Product was created."';
+			//echo '}';
+		}
+
+	}
+
+	else{
+		echo '{';
+			echo '"message": "Unable to create product PDF file invalid."';
+		echo '}';
+	}
 
 }
-else {
-	//echo '{';
-    //   echo '"message": "Unable to create product."';
-    //echo '}';
-
-}
- 
-// create the product
-if($product->create()){
-    //echo '{';
-    //   echo '"message": "Product was created."';
-    //echo '}';
-}
- 
-// if unable to create the product, tell the user
 else{
-    echo '{';
-        echo '"message": "Unable to create product."';
-    echo '}';
+	echo '{';
+		echo '"message": "Unable to create product."';
+	echo '}';
 }
+
 ?>

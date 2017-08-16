@@ -37,7 +37,7 @@ echo "<table class='table table-hover table-responsive table-bordered'>";
  
     echo "<tr>";
         echo "<td>Insurance No.</td>";
-        echo "<td>{$product->name}</td>";
+        echo "<td><button type='button' class='btn btn-success btn-lg'><span class='glyphicon glyphicon-ok-sign'></span> {$product->name} Signed by The Viriyah Insurance Public Company Limited.</button></td>";
     echo "</tr>";
  
     echo "<tr>";
